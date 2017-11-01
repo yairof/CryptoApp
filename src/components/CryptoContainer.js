@@ -24,6 +24,7 @@ class CryptoContainer extends Component {
             price_usd={coin.price_usd}
             percent_change_24h={coin.percent_change_24h}
             percent_change_7d={coin.percent_change_7d}
+            percent_change_1h={coin.percent_change_1h}
         />
     )
   }

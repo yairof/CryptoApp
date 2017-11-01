@@ -4,7 +4,7 @@ import { View, Text, StyleSheet, Image } from 'react-native';
 import { images } from './../Utils/CoinIcons'
 
 
-const CoinCard = ({ symbol, price_usd, percent_change_24h, coin_name, percent_change_7d }) => {
+const CoinCard = ({ symbol, price_usd, percent_change_24h, coin_name, percent_change_7d, percent_change_1h }) => {
   return (
     <View style={container}>
 
@@ -21,12 +21,16 @@ const CoinCard = ({ symbol, price_usd, percent_change_24h, coin_name, percent_ch
 
             <View style={statisticsContainer}>
 
+                <Text>1h:
+                      <Text style={percent_change_1h < 0 ? percentChangeMinus: percentChangePlus }> {percent_change_1h} % </Text>
+                </Text>
                 <Text>24h:
                      <Text style={percent_change_24h < 0 ? percentChangeMinus : percentChangePlus }> {percent_change_24h} % </Text>
                 </Text>
                 <Text>7d:
                     <Text style={percent_change_7d < 0 ? percentChangeMinus : percentChangePlus }> {percent_change_7d} % </Text>
                 </Text>
+
 
             </View>
 
