@@ -1,14 +1,31 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { View, Text, ScrollView, StyleSheet } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, RefreshControl } from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
+import axios from 'axios';
 
 
 import FetchCoinData from './../Actions/FetchCoinData.js';
 import CoinCard from './CoinCard';
 
 
+
 class CryptoContainer extends Component {
+  constructor(props) {
+   super(props);
+   this.state = {
+     refreshing: false,
+   };
+ }
+
+
+ _onRefresh() {
+    this.setState({refreshing: true});
+    this.props.FetchCoinData().then(() => {
+      this.setState({refreshing: false});
+    });
+  }
+
 
   componentDidMount() {
     this.props.FetchCoinData();
@@ -29,7 +46,6 @@ class CryptoContainer extends Component {
     )
   }
 
-
   render() {
     const { crypto } = this.props;
 
@@ -47,7 +63,15 @@ class CryptoContainer extends Component {
     }
 
     return (
-      <ScrollView contentContainerStyle={styles.contentContainer}>
+      <ScrollView
+        contentContainerStyle={styles.contentContainer}
+        refreshControl={
+          <RefreshControl
+            refreshing={this.state.refreshing}
+            onRefresh={this._onRefresh.bind(this)}
+          />
+        }
+        >
         {this.renderCoinCard()}
       </ScrollView>
     )
